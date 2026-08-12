@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { withBase } from '$lib/utils/navigation';
 	import { getContext, onMount } from 'svelte';
 	import { models, config, user } from '$lib/stores';
 
@@ -128,7 +129,7 @@
 			<div class="px-5 pt-4 pb-5 w-full flex flex-col">
 				<div class="text-sm dark:text-gray-300">
 					{#if chat.share_id}
-						<a href="/s/{chat.share_id}" target="_blank"
+						<a href={withBase(`/s/${chat.share_id}`)} target="_blank"
 							>{$i18n.t('You have shared this chat')}
 							<span class=" underline">{$i18n.t('before')}</span>.</a
 						>

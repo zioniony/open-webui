@@ -39,9 +39,11 @@
 	} from '$lib/stores';
 	import { refreshChatList } from '$lib/stores/chatList';
 	import { getFileContentById } from '$lib/apis/files';
-	import { goto } from '$app/navigation';
+	import { SOCKET_PATH } from '$lib/constants';
+	import { goto, withBase } from '$lib/utils/navigation';
+	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
-	import { beforeNavigate } from '$app/navigation';
+	import { beforeNavigate } from '$lib/utils/navigation';
 	import { updated } from '$app/state';
 
 	import i18n, { initI18n, getLanguages, changeLanguage } from '$lib/i18n';
@@ -163,12 +165,16 @@
 	};
 
 	const setupSocket = async (enableWebsocket) => {
-		const _socket = io(`${WEBUI_BASE_URL}` || undefined, {
+		// uri 只用于开发模式（直连后端 8080）。生产环境必须传 undefined：
+		// 若传子路径（如 /service/open-webui），socket.io-client 会把它解析成
+		// namespace 而不是连接地址，导致反代下连接永远失败。连接路径前缀
+		// 已经由 SOCKET_PATH（origin + base + /ws/socket.io）承担。
+		const _socket = io(dev ? WEBUI_BASE_URL : undefined, {
 			reconnection: true,
 			reconnectionDelay: 1000,
 			reconnectionDelayMax: 5000,
 			randomizationFactor: 0.5,
-			path: '/ws/socket.io',
+			path: SOCKET_PATH,
 			transports: enableWebsocket ? ['websocket'] : ['polling', 'websocket'],
 			auth: { token: localStorage.token }
 		});
@@ -1157,7 +1163,7 @@
 			if (error?.authRedirect) {
 				// Forward-auth proxy is redirecting to an external login page.
 				// Full-page navigation lets the browser follow the redirect natively.
-				window.location.href = '/';
+				window.location.href = withBase('/');
 				return;
 			}
 			console.error('Error loading backend config:', error);
@@ -1302,7 +1308,7 @@
 		rel="search"
 		type="application/opensearchdescription+xml"
 		title={$WEBUI_NAME}
-		href="/opensearch.xml"
+		href={withBase('/opensearch.xml')}
 		crossorigin="use-credentials"
 	/>
 </svelte:head>

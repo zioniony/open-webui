@@ -3,7 +3,7 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import Sortable from 'sortablejs';
 
-	import { goto } from '$app/navigation';
+	import { goto, withBase } from '$lib/utils/navigation';
 	import { page } from '$app/stores';
 	import {
 		user,
@@ -972,7 +972,7 @@
 					<Tooltip content={$i18n.t('New Chat')} placement="right">
 						<a
 							class=" cursor-pointer flex size-8 items-center justify-center transition group"
-							href="/"
+							href={withBase('/')}
 							draggable="false"
 							on:click={async (e) => {
 								e.stopImmediatePropagation();
@@ -1128,7 +1128,7 @@
 			>
 				<a
 					class="flex items-center rounded-xl size-8.5 h-full justify-center hover:bg-gray-50 dark:hover:bg-gray-900 transition no-drag-region"
-					href="/"
+					href={withBase('/')}
 					draggable="false"
 					on:click={newChatHandler}
 				>
@@ -1140,7 +1140,7 @@
 					/>
 				</a>
 
-				<a href="/" class="flex flex-1 px-0.5" on:click={newChatHandler}>
+				<a href={withBase('/')} class="flex flex-1 px-0.5" on:click={newChatHandler}>
 					<div
 						id="sidebar-webui-name"
 						class=" self-center font-normal text-gray-700 dark:text-gray-200"
@@ -1189,7 +1189,7 @@
 						<a
 							id="sidebar-new-chat-button"
 							class="group grow flex items-center space-x-2 rounded-xl px-2 py-1.5 hover:bg-gray-50 dark:hover:bg-gray-900 transition outline-none"
-							href="/"
+							href={withBase('/')}
 							draggable="false"
 							on:click={newChatHandler}
 							aria-label={$i18n.t('New Chat')}

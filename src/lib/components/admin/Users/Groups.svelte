@@ -1,7 +1,7 @@
 <script>
 	import { toast } from 'svelte-sonner';
 	import { onMount, getContext } from 'svelte';
-	import { goto } from '$app/navigation';
+	import { goto } from '$lib/utils/navigation';
 
 	import { adminGroupCount, user } from '$lib/stores';
 

@@ -1,5 +1,6 @@
 <script>
 	import { getContext } from 'svelte';
+	import { withBase } from '$lib/utils/navigation';
 	const i18n = getContext('i18n');
 
 	export let show = true;
@@ -43,7 +44,7 @@
 			<img
 				id="logo"
 				crossorigin="anonymous"
-				src="/static/favicon.png"
+				src={withBase('/static/favicon.png')}
 				class="size-6 rounded-full"
 				alt="logo"
 			/>
@@ -52,13 +53,13 @@
 		<video
 			bind:this={videoElement}
 			class="absolute inset-0 h-full w-full object-cover"
-			src="/assets/welcome.mp4"
+			src={withBase('/assets/welcome.mp4')}
 			autoplay
 			muted
 			loop
 			playsinline
 			preload="auto"
-			poster="/assets/welcome.webp"
+			poster={withBase('/assets/welcome.webp')}
 			aria-hidden="true"
 		></video>
 

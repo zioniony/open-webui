@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { withBase } from '$lib/utils/navigation';
 
 	type ChatListI18n = {
 		t: (key: string, options?: Record<string, unknown>) => string;
@@ -240,7 +241,7 @@
 					{#if showOwnerInfo && chat.user_id && chat.owner_name}
 						<Tooltip content={chat.owner_name}>
 							<img
-								src="/api/v1/users/{chat.user_id}/profile/image"
+								src={withBase('/api/v1/users/' + chat.user_id + '/profile/image')}
 								alt=""
 								class="size-4 rounded-full shrink-0 object-cover"
 							/>

@@ -19,13 +19,28 @@ declare global {
 
 let pyodideReady: Promise<void> | null = null;
 
+// The worker script is loaded from `{prefix}/_app/immutable/workers/...` when
+// Open WebUI is served behind a reverse proxy, so the sub-path base can be
+// derived from the worker's own URL. Direct access has no prefix.
+function deriveBasePath(): string {
+	try {
+		const pathname = self.location.pathname;
+		const idx = pathname.indexOf('/_app/');
+		return idx > 0 ? pathname.slice(0, idx) : '';
+	} catch {
+		return '';
+	}
+}
+
+const BASE_PATH = deriveBasePath();
+
 async function loadPyodideAndPackages(packages: string[] = []) {
 	self.stdout = null;
 	self.stderr = null;
 	self.result = null;
 
 	self.pyodide = await loadPyodide({
-		indexURL: '/pyodide/',
+		indexURL: `${BASE_PATH}/pyodide/`,
 		stdout: (text) => {
 			console.log('Python output:', text);
 

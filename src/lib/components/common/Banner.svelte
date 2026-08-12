@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { withBase } from '$lib/utils/navigation';
 	import type { Banner } from '$lib/types';
 	import { onMount, createEventDispatcher, getContext } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -108,7 +109,7 @@
 				<div class="hidden md:flex group w-fit md:items-center">
 					<a
 						class="text-gray-700 dark:text-white text-xs font-normal underline"
-						href="/"
+						href={withBase('/')}
 						target="_blank"
 					>
 						{$i18n.t('Learn More')}

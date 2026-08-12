@@ -1,4 +1,5 @@
 <script>
+	import { withBase } from '$lib/utils/navigation';
 	import { getContext, onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { adminFeedbackCount, adminLeaderboardCount, models as _models } from '$lib/stores';
@@ -84,7 +85,7 @@
 		>
 			<a
 				id="leaderboard"
-				href="/admin/evaluations/leaderboard"
+				href={withBase('/admin/evaluations/leaderboard')}
 				draggable="false"
 				class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex items-center gap-1.5 text-right transition select-none {selectedTab ===
 				'leaderboard'
@@ -101,7 +102,7 @@
 
 			<a
 				id="feedback"
-				href="/admin/evaluations/feedback"
+				href={withBase('/admin/evaluations/feedback')}
 				draggable="false"
 				class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex items-center gap-1.5 text-right transition select-none {selectedTab ===
 				'feedback'

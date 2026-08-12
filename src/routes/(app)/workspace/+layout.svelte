@@ -12,7 +12,7 @@
 		workspaceCounts
 	} from '$lib/stores';
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
+	import { goto, withBase } from '$lib/utils/navigation';
 	import { getModelItems } from '$lib/apis/models';
 	import { searchKnowledgeBases } from '$lib/apis/knowledge';
 	import { getPromptItems } from '$lib/apis/prompts';
@@ -153,7 +153,7 @@
 								'models'
 									? 'text-gray-900 dark:text-gray-100'
 									: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-								href="/workspace/models"
+								href={withBase('/workspace/models')}
 							>
 								<span>{$i18n.t('Models')}</span>
 								<span class="text-sm opacity-60">
@@ -170,7 +170,7 @@
 								'knowledge'
 									? 'text-gray-900 dark:text-gray-100'
 									: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-								href="/workspace/knowledge"
+								href={withBase('/workspace/knowledge')}
 							>
 								<span>{$i18n.t('Knowledge')}</span>
 								<span class="text-sm opacity-60">
@@ -187,7 +187,7 @@
 								'prompts'
 									? 'text-gray-900 dark:text-gray-100'
 									: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-								href="/workspace/prompts"
+								href={withBase('/workspace/prompts')}
 							>
 								<span>{$i18n.t('Prompts')}</span>
 								<span class="text-sm opacity-60">
@@ -204,7 +204,7 @@
 								'skills'
 									? 'text-gray-900 dark:text-gray-100'
 									: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-								href="/workspace/skills"
+								href={withBase('/workspace/skills')}
 							>
 								<span>{$i18n.t('Skills')}</span>
 								<span class="text-sm opacity-60">
@@ -221,7 +221,7 @@
 								'tools'
 									? 'text-gray-900 dark:text-gray-100'
 									: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-								href="/workspace/tools"
+								href={withBase('/workspace/tools')}
 							>
 								<span>{$i18n.t('Tools')}</span>
 								<span class="text-sm opacity-60">

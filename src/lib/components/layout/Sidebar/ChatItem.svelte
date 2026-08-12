@@ -16,7 +16,7 @@
 
 <script lang="ts">
 	import { toast } from 'svelte-sonner';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidate, invalidateAll, withBase } from '$lib/utils/navigation';
 	import { onMount, getContext, createEventDispatcher, tick } from 'svelte';
 	import { LinkPreview } from 'bits-ui';
 	import {
@@ -557,7 +557,7 @@
 							? 'bg-black/[0.035] dark:bg-white/[0.055] selected'
 							: 'bg-black/[0.035] dark:bg-white/[0.045] selected'
 						: ' hover:bg-gray-50 dark:hover:bg-gray-900 group-hover:bg-gray-50 dark:group-hover:bg-gray-900'}  whitespace-nowrap text-ellipsis transition"
-				href="/c/{id}"
+				href={withBase(`/c/${id}`)}
 				aria-current={id === $chatId ? 'page' : undefined}
 				onclick={() => {
 					openPreview = false;
@@ -588,7 +588,7 @@
 				{#if ownerUserId}
 					<Tooltip content={ownerName || 'Unknown'}>
 						<img
-							src="/api/v1/users/{ownerUserId}/profile/image"
+							src={withBase('/api/v1/users/' + ownerUserId + '/profile/image')}
 							alt=""
 							class="size-3.5 rounded-full shrink-0 object-cover mr-1.5"
 						/>

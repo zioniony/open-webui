@@ -4,7 +4,7 @@
 	import dayjs from '$lib/dayjs';
 	import relativeTime from 'dayjs/plugin/relativeTime';
 	import { toast } from 'svelte-sonner';
-	import { goto } from '$app/navigation';
+	import { goto } from '$lib/utils/navigation';
 	import { WEBUI_NAME, user, config, folders } from '$lib/stores';
 	import { getFolders } from '$lib/apis/folders';
 

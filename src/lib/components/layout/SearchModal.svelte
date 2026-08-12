@@ -27,7 +27,7 @@
 	import { config, user, chatId as currentChatId, tags } from '$lib/stores';
 	import { refreshChatList } from '$lib/stores/chatList';
 	import Messages from '../chat/Messages.svelte';
-	import { goto } from '$app/navigation';
+	import { goto, withBase } from '$lib/utils/navigation';
 	import EditPencilIcon from './Sidebar/icons/EditPencil.svelte';
 	import NotesIcon from './Sidebar/icons/Notes.svelte';
 
@@ -726,7 +726,7 @@
 							{:else}
 								<a
 									class="flex-1 min-w-0"
-									href="/c/{chat.id}"
+									href={withBase(`/c/${chat.id}`)}
 									draggable="false"
 									on:click={async () => {
 										await goto(`/c/${chat.id}`);

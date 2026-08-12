@@ -12,7 +12,7 @@
 
 	import { WEBUI_NAME, config, tools as _tools, user, workspaceActions } from '$lib/stores';
 
-	import { goto } from '$app/navigation';
+	import { goto } from '$lib/utils/navigation';
 	import {
 		createNewTool,
 		loadToolByUrl,

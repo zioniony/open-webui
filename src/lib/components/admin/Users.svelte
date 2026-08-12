@@ -1,7 +1,7 @@
 <script>
 	import { getContext, onMount } from 'svelte';
 
-	import { goto } from '$app/navigation';
+	import { goto, withBase } from '$lib/utils/navigation';
 	import { adminGroupCount, adminUserCount, config, user } from '$lib/stores';
 	import { page } from '$app/stores';
 	import { getGroups } from '$lib/apis/groups';
@@ -85,7 +85,7 @@
 		>
 			<a
 				id="overview"
-				href="/admin/users/overview"
+				href={withBase('/admin/users/overview')}
 				draggable="false"
 				class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex items-center gap-1.5 text-right transition select-none {selectedTab ===
 				'overview'
@@ -106,7 +106,7 @@
 
 			<a
 				id="groups"
-				href="/admin/users/groups"
+				href={withBase('/admin/users/groups')}
 				draggable="false"
 				class="px-0.5 py-1 min-w-fit rounded-lg lg:flex-none flex items-center gap-1.5 text-right transition select-none {selectedTab ===
 				'groups'

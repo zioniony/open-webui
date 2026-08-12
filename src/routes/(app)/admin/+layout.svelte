@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, getContext } from 'svelte';
-	import { goto } from '$app/navigation';
+	import { goto, withBase } from '$lib/utils/navigation';
 
 	import { WEBUI_NAME, config, mobile, showSettings, showSidebar, user } from '$lib/stores';
 	import { page } from '$app/stores';
@@ -70,7 +70,7 @@
 							class="min-w-fit px-1 text-sm {$page.url.pathname.includes('/admin/users')
 								? ''
 								: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-							href="/admin">{$i18n.t('Users')}</a
+							href={withBase('/admin')}>{$i18n.t('Users')}</a
 						>
 
 						<a
@@ -78,7 +78,7 @@
 							class="min-w-fit px-1 text-sm {$page.url.pathname.includes('/admin/evaluations')
 								? ''
 								: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-							href="/admin/evaluations">{$i18n.t('Evaluations')}</a
+							href={withBase('/admin/evaluations')}>{$i18n.t('Evaluations')}</a
 						>
 
 						{#if $config?.features?.enable_plugins}
@@ -87,7 +87,7 @@
 								class="min-w-fit px-1 text-sm {$page.url.pathname.includes('/admin/functions')
 									? ''
 									: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-								href="/admin/functions">{$i18n.t('Functions')}</a
+								href={withBase('/admin/functions')}>{$i18n.t('Functions')}</a
 							>
 						{/if}
 
@@ -96,7 +96,7 @@
 							class="min-w-fit px-1 text-sm {$page.url.pathname.includes('/admin/settings')
 								? ''
 								: 'text-gray-300 dark:text-gray-600 hover:text-gray-700 dark:hover:text-white'} transition select-none"
-							href="/admin/settings"
+							href={withBase('/admin/settings')}
 							on:click={(event) => {
 								event.preventDefault();
 								showSettings.set('admin:general');

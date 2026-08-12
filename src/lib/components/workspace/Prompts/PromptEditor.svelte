@@ -2,7 +2,7 @@
 	import { onMount, tick, getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import type { i18n as i18nType } from 'i18next';
-	import { goto } from '$app/navigation';
+	import { goto, withBase } from '$lib/utils/navigation';
 
 	import Textarea from '$lib/components/common/Textarea.svelte';
 	import { toast } from 'svelte-sonner';
@@ -706,7 +706,7 @@
 						<div class="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
 							{#if entry.user}
 								<img
-									src={`/api/v1/users/${entry.user.id}/profile/image`}
+									src={withBase(`/api/v1/users/${entry.user.id}/profile/image`)}
 									alt={entry.user.name}
 									class="size-3 rounded-full mr-0.5"
 									on:error={(e) => (e.target.src = '/user.png')}

@@ -2,6 +2,7 @@
 	import DOMPurify from 'dompurify';
 	import { marked } from 'marked';
 
+	import { withBase } from '$lib/utils/navigation';
 	import { getAdminDetails, userSignOut } from '$lib/apis/auths';
 	import { onMount, tick, getContext } from 'svelte';
 	import { config } from '$lib/stores';
@@ -61,7 +62,7 @@
 					<button
 						class="relative z-20 flex px-5 py-2 rounded-full bg-white border border-gray-100 dark:border-none hover:bg-gray-100 text-gray-700 transition font-normal text-sm"
 						on:click={async () => {
-							location.href = '/';
+							location.href = withBase('/');
 						}}
 					>
 						{$i18n.t('Check Again')}

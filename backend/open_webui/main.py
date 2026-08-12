@@ -8,6 +8,7 @@ import os
 import sys
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 from uuid import uuid4
 
 import aiohttp
@@ -205,6 +206,11 @@ from open_webui.utils.asgi_middleware import (
     RedirectMiddleware,
     WebsocketUpgradeGuardMiddleware,
 )
+from open_webui.utils.subpath import (
+    SubPathMiddleware,
+    get_forwarded_prefix,
+    rewrite_spa_index_html,
+)
 from open_webui.utils.audit import AuditLevel, AuditLoggingMiddleware
 from open_webui.utils.auth import (
     create_admin_user,
@@ -283,16 +289,30 @@ async def emit_chat_list_event(metadata: dict, chat_id: str):
 class SPAStaticFiles(StaticFiles):
     async def get_response(self, path: str, scope):
         try:
-            return await super().get_response(path, scope)
+            response = await super().get_response(path, scope)
         except (HTTPException, StarletteHTTPException) as ex:
             if ex.status_code == 404:
                 if path.endswith('.js'):
                     # Return 404 for javascript files
                     raise ex
                 else:
-                    return await super().get_response('index.html', scope)
+                    response = await super().get_response('index.html', scope)
             else:
                 raise ex
+
+        # When serving the SPA entry under a reverse-proxy sub-path, rewrite the
+        # HTML so every asset URL and the SvelteKit router base carry the prefix.
+        # Direct access (no X-Forwarded-Prefix) keeps the file untouched.
+        prefix = get_forwarded_prefix(scope)
+        if prefix:
+            file_path = getattr(response, 'path', None)
+            if file_path and os.path.basename(str(file_path)) == 'index.html':
+                html = Path(file_path).read_text(encoding='utf-8')
+                return Response(
+                    content=rewrite_spa_index_html(html, prefix),
+                    media_type='text/html',
+                )
+        return response
 
 
 class CORSStaticFiles(StaticFiles):
@@ -777,6 +797,10 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
+
+# Must be the outermost middleware: it injects the validated sub-path into the
+# ASGI scope (root_path) and rewrites root-relative redirect Locations.
+app.add_middleware(SubPathMiddleware)
 
 
 app.mount('/ws', socket_app)

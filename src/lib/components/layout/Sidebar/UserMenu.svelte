@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, getContext, onMount, tick } from 'svelte';
 
-	import { goto } from '$app/navigation';
+	import { goto, withBase } from '$lib/utils/navigation';
 	import { fade, slide } from 'svelte/transition';
 
 	import { getUsage } from '$lib/apis';
@@ -241,7 +241,7 @@
 			{#if $user?.role === 'admin' || $user?.permissions?.workspace?.models || $user?.permissions?.workspace?.knowledge || $user?.permissions?.workspace?.prompts || $user?.permissions?.workspace?.tools || $user?.permissions?.workspace?.skills}
 				<div class="flex items-center w-full">
 					<a
-						href="/workspace"
+						href={withBase('/workspace')}
 						draggable="false"
 						class="flex flex-1 h-[1.6875rem] items-center gap-2 rounded-xl px-2 text-[13px] hover:bg-gray-50/40 dark:hover:bg-gray-800/40 transition cursor-pointer select-none"
 						on:click={async (e) => {
@@ -285,7 +285,7 @@
 			{#if ($config?.features?.enable_notes ?? false) && ($user?.role === 'admin' || ($user?.permissions?.features?.notes ?? true))}
 				<div class="flex items-center w-full">
 					<a
-						href="/notes"
+						href={withBase('/notes')}
 						draggable="false"
 						class="flex flex-1 h-[1.6875rem] items-center gap-2 rounded-xl px-2 text-[13px] hover:bg-gray-50/40 dark:hover:bg-gray-800/40 transition cursor-pointer select-none"
 						on:click={async (e) => {
@@ -329,7 +329,7 @@
 			{#if $config?.features?.enable_calendar && ($user?.role === 'admin' || $user?.permissions?.features?.calendar)}
 				<div class="flex items-center w-full">
 					<a
-						href="/calendar"
+						href={withBase('/calendar')}
 						draggable="false"
 						class="flex flex-1 h-[1.6875rem] items-center gap-2 rounded-xl px-2 text-[13px] hover:bg-gray-50/40 dark:hover:bg-gray-800/40 transition cursor-pointer select-none"
 						on:click={async (e) => {
@@ -373,7 +373,7 @@
 			{#if $config?.features?.enable_automations && ($user?.role === 'admin' || $user?.permissions?.features?.automations)}
 				<div class="flex items-center w-full">
 					<a
-						href="/automations"
+						href={withBase('/automations')}
 						draggable="false"
 						class="flex flex-1 h-[1.6875rem] items-center gap-2 rounded-xl px-2 text-[13px] hover:bg-gray-50/40 dark:hover:bg-gray-800/40 transition cursor-pointer select-none"
 						on:click={async (e) => {
@@ -417,7 +417,7 @@
 			{#if role === 'admin'}
 				<div class="flex items-center w-full">
 					<a
-						href="/playground"
+						href={withBase('/playground')}
 						draggable="false"
 						class="flex flex-1 h-[1.6875rem] items-center gap-2 rounded-xl px-2 text-[13px] hover:bg-gray-50/40 dark:hover:bg-gray-800/40 transition cursor-pointer select-none"
 						on:click={async (e) => {
@@ -523,7 +523,7 @@
 
 			{#if role === 'admin'}
 				<a
-					href="/admin"
+					href={withBase('/admin')}
 					draggable="false"
 					class="flex h-[1.6875rem] items-center gap-2 rounded-xl px-2 text-[13px] w-full hover:bg-gray-50/40 dark:hover:bg-gray-800/40 transition cursor-pointer select-none"
 					on:click={async (e) => {
