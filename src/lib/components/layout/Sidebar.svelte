@@ -82,6 +82,7 @@
 	import ClockIcon from './Sidebar/icons/Clock.svelte';
 	import CodeIcon from './Sidebar/icons/Code.svelte';
 	import EditPencilIcon from './Sidebar/icons/EditPencil.svelte';
+	import FileTextIcon from './Sidebar/icons/FileText.svelte';
 	import NotesIcon from './Sidebar/icons/Notes.svelte';
 	import SearchIcon from './Sidebar/icons/Search.svelte';
 	import Sidebar from '../icons/Sidebar.svelte';
@@ -94,7 +95,7 @@
 	import MoreHorizontalIcon from './Sidebar/icons/MoreHorizontal.svelte';
 
 	const BREAKPOINT = 768;
-	const DEFAULT_PINNED_ITEMS = ['notes', 'workspace'];
+	const DEFAULT_PINNED_ITEMS = ['notes', 'workspace', 'scratch'];
 
 	let scrollTop = 0;
 
@@ -163,6 +164,8 @@
 					$user?.permissions?.workspace?.tools ||
 					$user?.permissions?.workspace?.skills
 				);
+			case 'scratch':
+				return true;
 			case 'automations':
 				return (
 					$config?.features?.enable_automations &&
@@ -184,6 +187,7 @@
 		const items = {
 			notes: { label: 'Notes', href: '/notes', iconType: 'note' },
 			workspace: { label: 'Workspace', href: '/workspace', iconType: 'workspace' },
+			scratch: { label: 'Scratch', href: '/scratch', iconType: 'scratch' },
 			automations: { label: 'Automations', href: '/automations', iconType: 'automations' },
 			calendar: { label: 'Calendar', href: '/calendar', iconType: 'calendar' },
 			playground: { label: 'Playground', href: '/playground', iconType: 'playground' }
@@ -194,6 +198,7 @@
 	const menuItemPathPrefixes = {
 		notes: '/notes',
 		workspace: '/workspace',
+		scratch: '/scratch',
 		calendar: '/calendar',
 		automations: '/automations',
 		playground: '/playground'
@@ -1043,6 +1048,8 @@
 											<NotesIcon className="size-4" strokeWidth="1.5" />
 										{:else if itemId === 'workspace'}
 											<WorkspaceIcon className="size-4" strokeWidth="1.5" />
+										{:else if itemId === 'scratch'}
+											<FileTextIcon className="size-4" strokeWidth="1.5" />
 										{:else if itemId === 'automations'}
 											<ClockIcon className="size-4" strokeWidth="1.5" />
 										{:else if itemId === 'calendar'}
@@ -1253,6 +1260,8 @@
 												<NotesIcon className="size-4" strokeWidth="1.5" />
 											{:else if itemId === 'workspace'}
 												<WorkspaceIcon className="size-4" strokeWidth="1.5" />
+											{:else if itemId === 'scratch'}
+												<FileTextIcon className="size-4" strokeWidth="1.5" />
 											{:else if itemId === 'automations'}
 												<ClockIcon className="size-4" strokeWidth="1.5" />
 											{:else if itemId === 'calendar'}
